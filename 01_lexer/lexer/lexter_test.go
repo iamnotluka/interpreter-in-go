@@ -105,14 +105,6 @@ func TestNextToken(t *testing.T) {
 		{token.EOF, ""},
 	}
 
-	/**
-		if (5 < 10) {
-		return true;
-	} else {
-		return false;
-	}
-	*/
-
 	lexer := NewLexer(input)
 
 	for i, tt := range tests {
