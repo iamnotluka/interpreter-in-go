@@ -42,7 +42,6 @@ func (lexer *Lexer) ParseToken() token.Token {
 		newToken = createNewToken(token.LBRACE, lexer.currentChar)
 	case '}':
 		newToken = createNewToken(token.RBRACE, lexer.currentChar)
-	
 	case '-':
 		newToken = createNewToken(token.MINUS, lexer.currentChar)
 	case '!':
