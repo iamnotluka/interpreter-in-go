@@ -39,6 +39,9 @@ const (
 	IF			= "IF"
 	ELSE		= "ELSE"
 	RETURN		= "RETURN"
+
+	EQUAL 		= "=="
+	NOT_EQUAL	= "!="
 )
 
 var validLiteralTypeMap = map[string]TokenType{

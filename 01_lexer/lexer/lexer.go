@@ -27,7 +27,13 @@ func (lexer *Lexer) ParseToken() token.Token {
 
 	switch lexer.currentChar {
 	case '=':
-		newToken = createNewToken(token.ASSIGN, lexer.currentChar)
+		if (lexer.peekChar() == '=') {
+			char := lexer.currentChar
+			lexer.readNextChar()
+			newToken = token.Token{Type: token.EQUAL, Literal: string(char) + string(lexer.currentChar)}
+		} else {
+			newToken = createNewToken(token.ASSIGN, lexer.currentChar)
+		}
 	case ';':
 		newToken = createNewToken(token.SEMICOLON, lexer.currentChar)
 	case '(':
@@ -45,7 +51,13 @@ func (lexer *Lexer) ParseToken() token.Token {
 	case '-':
 		newToken = createNewToken(token.MINUS, lexer.currentChar)
 	case '!':
-		newToken = createNewToken(token.BANG, lexer.currentChar)
+		if (lexer.peekChar() == '=') {
+			char := lexer.currentChar
+			lexer.readNextChar()
+			newToken = token.Token{Type: token.NOT_EQUAL, Literal: string(char) + string(lexer.currentChar)}
+		} else {
+			newToken = createNewToken(token.BANG, lexer.currentChar)
+		}
 	case '*':
 		newToken = createNewToken(token.ASTERISK, lexer.currentChar)
 	case '/':
@@ -73,6 +85,14 @@ func (lexer *Lexer) ParseToken() token.Token {
 
 	lexer.readNextChar()
 	return newToken
+}
+
+func (lexer *Lexer) peekChar() byte {
+	if lexer.nextPosition >= len(lexer.input) {
+		return 0
+	} else {
+		return lexer.input[lexer.nextPosition]
+	}
 }
 
 /*
