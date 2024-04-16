@@ -65,3 +65,7 @@ ok      example/lexer/lexer     0.474s
 ```
 
 ## Parsing
+
+We've all encountered the parser in some way - most probably by encountering a "parser error" when trying to run our dodgy code.
+
+What is parsing? Parsing is a component that takes some input data (frequently text) and builds up a data structure like tree or some other hierarchical structure. This allows us to represent input with some structure.
