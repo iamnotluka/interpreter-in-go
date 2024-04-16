@@ -60,7 +60,7 @@ func (lexer *Lexer) ParseToken() token.Token {
 	default:
 		if isCharLetter(lexer.currentChar) {
 			newToken.Literal = lexer.readIdentifier()
-			newToken.Type = token.LookupIdent(newToken.Literal)
+			newToken.Type = token.GetTokenTypeFromgetTokenTypeFromLiteralLiteral(newToken.Literal)
 			return newToken
 		} else if isCharDigit(lexer.currentChar) {
 			newToken.Type = token.INT
