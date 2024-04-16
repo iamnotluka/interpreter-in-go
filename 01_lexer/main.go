@@ -1,8 +1,8 @@
 package main
 
 import (
-	"example/lexer/repl"
 	"fmt"
+	"lexer/repl"
 	"os"
 	"os/user"
 )

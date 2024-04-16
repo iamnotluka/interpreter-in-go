@@ -1,7 +1,7 @@
 package lexer
 
 import (
-	"example/lexer/token"
+	"lexer/token"
 )
 
 type Lexer struct {

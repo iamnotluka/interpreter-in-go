@@ -2,10 +2,10 @@ package repl
 
 import (
 	"bufio"
-	"example/lexer/lexer"
-	"example/lexer/token"
 	"fmt"
 	"io"
+	"lexer/lexer"
+	"lexer/token"
 )
 
 const PROMPT = ">> "
