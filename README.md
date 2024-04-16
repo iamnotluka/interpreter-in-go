@@ -55,6 +55,8 @@ Feel free to start typing in commands.
 {Type:; Literal:;}
 ```
 
+Typing `quit` exits the interactive experience.
+
 ### Testing
 
 There is also `lexer_test.go` file which we can run to test that our lexer is doing what it's supposed to.
