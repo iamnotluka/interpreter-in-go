@@ -53,4 +53,15 @@ Feel free to start typing in commands.
 {Type:; Literal:;}
 ```
 
+### Testing
+
+There is also `lexer_test.go` file which we can run to test that our lexer is doing what it's supposed to.
+
+You can run `go test ./01_lexer/lexer` command. You should get this output if everything is working properly:
+
+```
+➜  01_lexer git:(main) ✗ go test ./lexer
+ok      example/lexer/lexer     0.474s
+```
+
 ## Parsing
