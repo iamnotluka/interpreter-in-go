@@ -42,6 +42,19 @@ func (lexer *Lexer) ParseToken() token.Token {
 		newToken = createNewToken(token.LBRACE, lexer.currentChar)
 	case '}':
 		newToken = createNewToken(token.RBRACE, lexer.currentChar)
+	
+	case '-':
+		newToken = createNewToken(token.MINUS, lexer.currentChar)
+	case '!':
+		newToken = createNewToken(token.BANG, lexer.currentChar)
+	case '*':
+		newToken = createNewToken(token.ASTERISK, lexer.currentChar)
+	case '/':
+		newToken = createNewToken(token.SLASH, lexer.currentChar)
+	case '<':
+		newToken = createNewToken(token.LT, lexer.currentChar)
+	case '>':
+		newToken = createNewToken(token.GT, lexer.currentChar)
 	case 0:
 		newToken.Literal = ""
 		newToken.Type = token.EOF
