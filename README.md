@@ -73,3 +73,5 @@ ok      example/lexer/lexer     0.474s
 We've all encountered the parser in some way - most probably by encountering a "parser error" when trying to run our dodgy code.
 
 What is parsing? Parsing is a component that takes some input data (frequently text) and builds up a data structure like tree or some other hierarchical structure. This allows us to represent input with some structure.
+
+In short, parsers take source code as input (in this case as tokens), and represent it as a data structure which represents this source code. The process unavoidable checks and analyses the input that it confirms to the expected structure. For this reason parsing is also refered to as syntatic analysis.
