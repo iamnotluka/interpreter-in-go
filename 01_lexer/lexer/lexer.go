@@ -6,56 +6,125 @@ import (
 
 type Lexer struct {
 	input			string
-	position		int
-	readPosition	int
-	ch				byte
+	currentPosition	int
+	nextPosition	int
+	currentChar			byte
 }
 
-func (l *Lexer) NextToken() token.Token {
-	var tok token.Token
+/** 
+Constructor which returns instantiated lexer given the input.
+*/
+func NewLexer(input string) *Lexer {
+	lexer := &Lexer{input: input}
+	lexer.readNextChar()
+	return lexer
+}
 
-	switch l.ch {
+func (lexer *Lexer) ParseToken() token.Token {
+	var newToken token.Token
+
+	lexer.skipWhitespace()
+
+	switch lexer.currentChar {
 	case '=':
-		tok = newToken(token.ASSIGN, l.ch)
+		newToken = createNewToken(token.ASSIGN, lexer.currentChar)
 	case ';':
-		tok = newToken(token.SEMICOLON, l.ch)
+		newToken = createNewToken(token.SEMICOLON, lexer.currentChar)
 	case '(':
-		tok = newToken(token.LPAREN, l.ch)
+		newToken = createNewToken(token.LPAREN, lexer.currentChar)
 	case ')':
-		tok = newToken(token.RPAREN, l.ch)
+		newToken = createNewToken(token.RPAREN, lexer.currentChar)
 	case ',':
-		tok = newToken(token.COMMA, l.ch)
+		newToken = createNewToken(token.COMMA, lexer.currentChar)
 	case '+':
-		tok = newToken(token.PLUS, l.ch)
+		newToken = createNewToken(token.PLUS, lexer.currentChar)
 	case '{':
-		tok = newToken(token.LBRACE, l.ch)
+		newToken = createNewToken(token.LBRACE, lexer.currentChar)
 	case '}':
-		tok = newToken(token.RBRACE, l.ch)
+		newToken = createNewToken(token.RBRACE, lexer.currentChar)
 	case 0:
-		tok.Literal = ""
-		tok.Type = token.EOF
+		newToken.Literal = ""
+		newToken.Type = token.EOF
+	default:
+		if isCharLetter(lexer.currentChar) {
+			newToken.Literal = lexer.readIdentifier()
+			newToken.Type = token.LookupIdent(newToken.Literal)
+			return newToken
+		} else if isCharDigit(lexer.currentChar) {
+			newToken.Type = token.INT
+			newToken.Literal = lexer.readNumber()
+			return newToken
+		} else {
+			newToken = createNewToken(token.ILLEGAL, lexer.currentChar)
+		}
 	}
 
-	l.readChar()
-	return tok
+	lexer.readNextChar()
+	return newToken
 }
 
-func New(input string) *Lexer {
-	l := &Lexer{input: input}
-	l.readChar()
-	return l
-}
+/*
+Function which reads the next character in the input.
 
-func (l *Lexer) readChar() {
-	if l.readPosition >= len(l.input) {
-		l.ch = 0
+We first check if we have reached the end of the input, and if we did so we set the char to 0. We use this value to terminate the reading.
+
+Otherwise we just move to the next character in the sequence and update the state of the lexer using ch, position and readPosition values.
+*/
+func (lexer *Lexer) readNextChar() {
+	if lexer.nextPosition >= len(lexer.input) {
+		lexer.currentChar = 0
 	} else {
-		l.ch = l.input[l.readPosition]
+		lexer.currentChar = lexer.input[lexer.nextPosition]
 	}
-	l.position = l.readPosition
-	l.readPosition++
+	lexer.currentPosition = lexer.nextPosition
+	lexer.nextPosition++
 }
 
-func newToken(tokenType token.TokenType, ch byte) token.Token {
-	return token.Token{Type: tokenType, Literal: string(ch)}
+/** 
+In our language whitespace basically is just used to improve readability, which means we can just skip it.
+
+This function iterates to the next character if the whitespace character is encountered.
+*/
+func (lexer *Lexer) skipWhitespace() {
+	for lexer.currentChar == ' ' || lexer.currentChar == '\t' || lexer.currentChar == '\n' || lexer.currentChar == '\r' {
+		lexer.readNextChar()
+	}
+}
+
+func isCharLetter(char byte) bool {
+	return 'a' <= char && char <= 'z' || 'A' <= char && char <= 'Z' || char == '_'
+}
+
+func isCharDigit(char byte) bool {
+	return '0' <= char && char <= '9'
+}
+
+/**
+readidentified and readNumber functions:
+
+Remember the beggining of the identified in the lexer input and iterate until you find the end of it.
+
+Return the whole identifier.
+*/
+func (lexer *Lexer) readIdentifier() string {
+	position := lexer.currentPosition
+	for isCharLetter(lexer.currentChar) {
+		lexer.readNextChar()
+	}
+	return lexer.input[position:lexer.currentPosition]
+}
+func (l *Lexer) readNumber() string {
+	currentPosition := l.currentPosition
+	for isCharDigit(l.currentChar) {
+		l.readNextChar()
+	}
+
+	return l.input[currentPosition:l.currentPosition]
+}
+
+/**
+Helper function which returns the token representation of the data we have.
+*/
+func createNewToken(tokenType token.TokenType, char byte) token.Token {
+	return token.Token{Type: tokenType, Literal: string(char)}
 }
