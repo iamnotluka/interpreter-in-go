@@ -1,33 +1,18 @@
 # interpreter-in-go
 
-Interpreters are magical. Seemingly random characters (letters, numbers and special characters) are feed into it and suddenly become meaningful.
+Interpreters are magical. Seemingly random characters (letters, numbers and special characters) are feed into it and suddenly become meaningful. In this project, I have built tree-walking interpreter with it's own lexer, parser and own tree representation, as well as it's own evaluator. Every interpreter is built to interpret a specific programming language. That's how the programming languages are implemented basically.
 
-In this project, I have built tree-walking interpreter with it's own lexer, parser and own tree representation, as well as it's own evaluator.
-
-Every interpreter is built to interpret a specific programming language. That's how the programming languages are implemented basically. In this project, I am implementing a language called Monkey and it has list of these features:
-
-- C like syntax
-- variable bindings
-- integers and booleans
-- arithmetic expressions
-- built-in functions
-- first-class and higher-order functions
-- closures
-- a string data structure
-- an aray data structure
-- a hash data structure
-
-We will implement first class functions, what this means is that functions are just values same as integers or strings.
+I will implement first class functions, what this means is that functions are just values same as integers or strings.
 
 The project will have couple major parts:
 
-- the lexer
-- the parser
-- the AST (Abstract Syntax Tree)
-- the internal object system
-- the evaluator
+- The Lexer
+- The Parser
+- The AST (Abstract Syntax Tree)
+- The Internal Object System
+- The Evaluator
 
-### 1 Lexing
+## Lexer
 
 Representing our code in other forms that are easier to work with.
 
@@ -35,26 +20,37 @@ The representation of the source code is done twice before it's able to be evalu
 
 Source code -> Tokens -> AST
 
-The source code to tokens transformation is called "lexical analysis"
+The source code to tokens transformation is called "lexical analysis".
 
-Example of what comes into the lexer:
+Below is the example of what comes into the lexer and outputs.
 
-```
-let x = 5 + 5;
-```
-
-And this comes out as the output:
+If you wish to run the lexer yourself just run the main.go function in our lexer folder.
 
 ```
-[
-    LET,
-    IDENTIFIER('x),
-    EQUAL_SIGN,
-    INTEGER(5),
-    PLUS_SIGN,
-    INTEGER(5),
-    SEMICOLON
-]
+cd 01_lexer && go run main.go
 ```
 
-#### Token Definition
+```
+➜  01_lexer git:(main) ✗ go run main.go
+Hello zoricl! This is Luka's programming language called fluxo. Welcome!
+Feel free to start typing in commands.
+>> let add = fn(x, y) { x + y; };
+{Type:LET Literal:let}
+{Type:IDENT Literal:add}
+{Type:= Literal:=}
+{Type:FUNCTION Literal:fn}
+{Type:( Literal:(}
+{Type:IDENT Literal:x}
+{Type:, Literal:,}
+{Type:IDENT Literal:y}
+{Type:) Literal:)}
+{Type:{ Literal:{}
+{Type:IDENT Literal:x}
+{Type:+ Literal:+}
+{Type:IDENT Literal:y}
+{Type:; Literal:;}
+{Type:} Literal:}}
+{Type:; Literal:;}
+```
+
+## Parsing
