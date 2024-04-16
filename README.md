@@ -1,4 +1,6 @@
-# interpreter-in-go
+# Language Intepreter In Go
+
+Writing my own language from scratch following book by Thorsten Ball as a guide: https://thorstenball.com/
 
 Interpreters are magical. Seemingly random characters (letters, numbers and special characters) are feed into it and suddenly become meaningful. In this project, I have built tree-walking interpreter with it's own lexer, parser and own tree representation, as well as it's own evaluator. Every interpreter is built to interpret a specific programming language. That's how the programming languages are implemented basically.
 
