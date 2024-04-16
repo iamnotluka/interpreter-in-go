@@ -23,6 +23,10 @@ func Start(in io.Reader, out io.Writer) {
 
 		line := scanner.Text()
 
+		if line == "quit" {
+			break
+		}
+
 		newLexer := lexer.NewLexer(line)
 
 		for currentToken := newLexer.ParseToken(); currentToken.Type != token.EOF; currentToken = newLexer.ParseToken() {
