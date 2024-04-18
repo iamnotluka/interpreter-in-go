@@ -30,13 +30,13 @@ func TestLetStatements(t *testing.T) {
 	}{
 		{"x"},
 		{"y"},
-		{"foobar"},
+		{"foo"},
 	}
 
 	for i, tt := range tests {
 		statement := program.Statements[i]
 		if !testLetStatement(t, statement, tt.expectedIdentified) {
-			return
+			continue
 		}
 	}
 }
@@ -65,5 +65,3 @@ func testLetStatement(t *testing.T, statement ast.Statement, name string) bool {
 
 	return true
 }
-
-// Continue on PAGE 41 https://edu.anarcho-copy.org/Programming%20Languages/Go/writing%20an%20INTERPRETER%20in%20go.pdf
